@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Parikshit 🎉</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:'Segoe UI', sans-serif;
+  background:url("assets/images/birthday-bg.png") no-repeat center center fixed;
+  background-size:cover;
+  color:#fff;
+  overflow:hidden;
+}
+
+/* dark overlay for readability */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.35);
+  z-index:-1;
+}
+
+.screen{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  opacity:0;
+  transform:scale(1.1);
+  transition:opacity .8s ease, transform .8s ease;
+}
+
+.screen.active{
+  opacity:1;
+  transform:scale(1);
+  z-index:1;
+}
+
+img{
+  max-width:85%;
+  border-radius:18px;
+  margin:10px;
+}
+
+button{
+  padding:12px 22px;
+  border:none;
+  border-radius:22px;
+  background:#ff4d6d;
+  color:#fff;
+  font-size:16px;
+}
+
+.controls{
+  position:fixed;
+  top:12px;
+  right:12px;
+  z-index:99;
+}
+
+.controls button{
+  background:#111;
+  font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="controls">
+  <button onclick="toggleMusic()">🔊 Music</button>
+</div>
+
+<audio id="bgm" loop>
+  <source src="assets/audio/music.mp3" type="audio/mpeg">
+</audio>
+
+<div class="screen active">
+  <img src="assets/gifs/intro.gif">
+  <h1>Happy 14th Birthday pagal 🎉</h1>
+  <h2>Parikshit</h2>
+  <button onclick="next()">Next ➜</button>
+</div>
+
+<div class="screen">
+  <img src="assets/gifs/surprise.gif">
+  <h2> hat pagal 🎂</h2>
+  <button onclick="next()">Next ➜</button>
+</div>
+
+<div class="screen">
+  <h2>Memories 📸</h2>
+  <img src="assets/images/1.jpg">
+  <img src="assets/images/2.jpg">
+  <button onclick="next()">Next ➜</button>
+</div>
+
+<div class="screen">
+  <img src="assets/gifs/gift.gif">
+  <h2>PARTY KAB DEGA , SPECIAL CHAIYA LADLE✨</h2>
+</div>
+
+<script>
+let i = 0;
+const screens = document.querySelectorAll('.screen');
+
+function next(){
+  screens[i].classList.remove('active');
+  i = (i + 1) % screens.length;
+  screens[i].classList.add('active');
+}
+
+let music = document.getElementById('bgm');
+function toggleMusic(){
+  if(music.paused){
+    music.play();
+  }else{
+    music.pause();
+  }
+}
+
+/* swipe support */
+let startX = 0;
+document.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+document.addEventListener('touchend', e => {
+  let dx = e.changedTouches[0].clientX - startX;
+  if(dx < -50) next();
+});
+</script>
+
+</body>
+</html>
